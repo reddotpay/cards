@@ -1,6 +1,6 @@
-# card
+# cards
 --
-    import "github.com/reddotpay/card"
+    import "github.com/reddotpay/cards"
 
 
 ## Usage
