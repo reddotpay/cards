@@ -9,6 +9,9 @@ import (
 
 func TestBrand_Brand_Visa(t *testing.T) {
 	assert.Equal(t, cards.BrandVisa, cards.Brand("4111111111111111"))
+	assert.Equal(t, cards.BrandVisa, cards.Brand("4444333322221111"))
+	assert.Equal(t, cards.BrandVisa, cards.Brand("4911830000000"))
+	assert.Equal(t, cards.BrandVisa, cards.Brand("4917610000000000"))
 }
 
 func TestBrand_Brand_MasterCard(t *testing.T) {
@@ -34,6 +37,11 @@ func TestBrand_Brand_Discover(t *testing.T) {
 
 func TestBrand_Brand_UnionPay(t *testing.T) {
 	assert.Equal(t, cards.BrandUnionPay, cards.Brand("6293077338195127"))
+}
+
+func TestBrand_Brand_Maestro(t *testing.T) {
+	assert.Equal(t, cards.BrandMaestro, cards.Brand("6759649826438453"))
+	assert.Equal(t, cards.BrandMaestro, cards.Brand("6799990100000000019"))
 }
 
 func TestBrand_Brand_Others(t *testing.T) {

@@ -9,6 +9,8 @@ const (
 	BrandVisa = "visa"
 	// BrandMasterCard defines MasterCard card brand
 	BrandMasterCard = "mastercard"
+	// BrandMaestro defines Maestro card brand
+	BrandMaestro = "maestro"
 	// BrandUnionPay defines UnionPay card brand
 	BrandUnionPay = "unionpay"
 	// BrandDiners defines Diners card brand
@@ -23,22 +25,31 @@ const (
 	BrandOthers = "others"
 )
 
-// BrandCheck defines a map of functions to check the various card brands
-var BrandCheck = map[string]func(string) bool{
-	BrandVisa:            isVisa,
-	BrandMasterCard:      isMasterCard,
-	BrandUnionPay:        isUnionPay,
-	BrandDiners:          isDiners,
-	BrandDiscover:        isDiscover,
-	BrandAmericanExpress: isAmericanExpress,
-	BrandJCB:             isJCB,
+// BrandCheck defines brand name and check function
+type BrandCheck struct {
+	Brand string
+	Check func(string) bool
+}
+
+// BrandChecks defines an array of BrandCheck
+var BrandChecks = []BrandCheck{
+	{BrandVisa, isVisa},
+	{BrandMasterCard, isMasterCard},
+	{BrandUnionPay, isUnionPay},
+	{BrandDiners, isDiners},
+	{BrandDiscover, isDiscover},
+	{BrandAmericanExpress, isAmericanExpress},
+	{BrandJCB, isJCB},
+
+	// Maestro must be after Discover
+	{BrandMaestro, isMaestro},
 }
 
 // Brand returns the corresponding card brand
 func Brand(number string) string {
-	for brand, check := range BrandCheck {
-		if check(number) {
-			return brand
+	for _, brandCheck := range BrandChecks {
+		if brandCheck.Check(number) {
+			return brandCheck.Brand
 		}
 	}
 
@@ -112,4 +123,15 @@ func isAmericanExpress(number string) bool {
 func isJCB(number string) bool {
 	digits, _ := strconv.Atoi(string(number[:4]))
 	return (digits >= 3528) && (digits <= 3589)
+}
+
+func isMaestro(number string) bool {
+	if len(number) > 19 {
+		return false
+	}
+
+	digits, _ := strconv.Atoi(string(number[:2]))
+	return (digits == 50) ||
+		((digits >= 56) && (digits <= 64)) ||
+		((digits >= 66) && (digits <= 69))
 }
