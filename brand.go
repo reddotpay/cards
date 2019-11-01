@@ -83,6 +83,11 @@ func isUnionPay(number string) bool {
 		return false
 	}
 
+	if string(number[:2]) == "81" {
+		bin, _ := strconv.Atoi(string(number[:6]))
+		return (bin >= 810000) && (bin <= 817199)
+	}
+
 	return string(number[:2]) == "62"
 }
 
