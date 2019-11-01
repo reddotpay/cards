@@ -33,6 +33,10 @@ func TestBrand_Brand_Diners(t *testing.T) {
 
 func TestBrand_Brand_Discover(t *testing.T) {
 	assert.Equal(t, cards.BrandDiscover, cards.Brand("6011000990139424"))
+	assert.Equal(t, cards.BrandDiscover, cards.Brand("6011000400000000"))
+	assert.Equal(t, cards.BrandDiscover, cards.Brand("6011601160116611"))
+	assert.Equal(t, cards.BrandDiscover, cards.Brand("6445644564456445"))
+	assert.Equal(t, cards.BrandDiscover, cards.Brand("6011111111111117"))
 }
 
 func TestBrand_Brand_UnionPay(t *testing.T) {

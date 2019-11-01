@@ -108,13 +108,15 @@ func isDiscover(number string) bool {
 		return false
 	}
 
-	bin, _ := strconv.Atoi(string(number[:6]))
-	return (bin >= 601100 && bin <= 601109) ||
-		(bin >= 601120 && bin <= 601149) ||
-		(bin == 601174) ||
-		(bin >= 601177 && bin <= 601179) ||
-		(bin >= 601186 && bin <= 601199) ||
-		(bin >= 644000 && bin <= 659999)
+	if string(number[:4]) == "6011" {
+		return true
+	}
+
+	if string(number[:2]) == "64" || string(number[:2]) == "65" {
+		return true
+	}
+
+	return false
 }
 
 func isAmericanExpress(number string) bool {
